@@ -6,11 +6,13 @@ import ButtonLink from "../ButtonLink/ButtonLink";
 
 const Header = ({loginButtonRequired}) => {
   return (
-    <header className={cn('container', styles.header)}>
-      <Link to={'/'}>
-        <img src={logo} alt="My healthy plate logo" />
-      </Link>
-      {loginButtonRequired && <ButtonLink link={'/login'}>Log In</ButtonLink>}
+    <header className={styles.header}>
+      <div className={cn("container", styles.container)}>
+        <Link to={"/"}>
+          <img src={logo} alt="My healthy plate logo" />
+        </Link>
+        {loginButtonRequired && <ButtonLink link={"/login"}>Log In</ButtonLink>}
+      </div>
     </header>
   );
 }

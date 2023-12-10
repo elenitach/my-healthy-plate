@@ -4,6 +4,7 @@
   height: 100vh;
   padding: 20px 30px;
   background-color: var(--nav-color);
+  z-index: 1;
 }
 
 .nav {

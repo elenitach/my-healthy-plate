@@ -6,7 +6,7 @@
 .main {
   background: url(./res/food.png) no-repeat 90%;
   background-size: contain;
-  padding-bottom: 40px;
+  padding: 40px 0;
 }
 
 .main__header {

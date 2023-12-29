@@ -32,7 +32,7 @@ const Recipes = () => {
       </option>
     </select>
     <RecipesContainer>
-      <ButtonLink link={'/add_recipe'} variant={{addRecipe: true}}>
+      <ButtonLink link={'/add_recipe'} variant="addRecipe">
         New
       </ButtonLink>
       {

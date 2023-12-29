@@ -1,13 +1,13 @@
 
 .recipePage {
   margin-top: 50px;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--c-gray-1);
   border-radius: 12px;
 }
 
 .recipePage__header {
   min-height: 200px;
-  background: var(--recipe-background);
+  background: var(--c-recipe-background);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -53,10 +53,6 @@
   padding: 20px;
 }
 
-.section__header {
-  margin-top: 30px;
-}
-
 .recipe__time {
   display: flex;
   align-items: center;
@@ -75,16 +71,37 @@
   background-repeat: no-repeat;
 }
 
+.headerWrapper {
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
 
-.button_add {
+.coverHeader {
+  margin-bottom: 6px;
+}
+
+.buttonSmall {
   width: 16px;
   height: 16px;
-  margin-top: 37px;
   margin-left: 10px;
 }
 
-.button_edit {
-  margin-left: 10px;
+.buttonAccept {
+  color: var(--c-success);
+}
+
+.buttonAccept:hover {
+  color: var(--c-success-hover);
+}
+
+.buttonEdit {
+  color: var(--c-gray-4);
+}
+
+.buttonEdit:hover {
+  color: var(--c-gray-3);
 }
 
 .recipe__footerContainer {
@@ -101,22 +118,36 @@
   margin-top: 10px;
 }
 
+.button_resetCover:hover {
+  background-color: var(--c-recipe-background);
+}
+
+.buttonAdd {
+  width: 24px;
+  height: 24px;
+  margin-left: 10px;
+}
+
+.buttonAdd:hover {
+  color: var(--c-gray-5);
+}
+
 .input {
   background-color: transparent;
   outline: none;
   border: none;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--c-gray-1);
 }
 
 .input:focus {
   border: none;
-  border-bottom: 1px solid var(--border-color-dark);
+  border-bottom: 1px solid var(--c-gray-3);
 }
 
 .input_time {
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--c-gray-1);
 }
 
 .input_time:focus {
-  border: 1px solid var(--border-color-dark);
+  border: 1px solid var(--c-gray-3);
 }

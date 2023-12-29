@@ -9,7 +9,7 @@
 .statistics__data {
   padding: 5px;
   height: fit-content;
-  border: 1px solid var(--border-color) !important;
+  border: 1px solid var(--c-gray-1) !important;
   border-radius: 12px !important;
 }
 

@@ -11,6 +11,8 @@ import { selectUser } from '../../redux/user/userSlice';
 import { Modal } from 'react-bootstrap';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 import { storage } from '../../firebaseConfig';
+import IconButton from '../IconButton/IconButton';
+import PlusIcon from '../Icons/PlusIcon';
 
 const AddRecipe = () => {
   const dispatch = useDispatch();
@@ -133,35 +135,35 @@ const AddRecipe = () => {
 
   return (
     <div className={styles.recipePage}>
-      <header 
+      <header
         className={styles.recipePage__header}
         style={{
-          backgroundImage: currentCover !== '' && `url(${currentCover})`
+          backgroundImage: currentCover !== "" && `url(${currentCover})`,
         }}
       >
         <div className={styles.recipe__data}>
-          <input 
-            type='text' 
-            className={cn(styles.recipePage__title, styles.input)} 
-            value={currentTitle} 
+          <input
+            type="text"
+            className={cn(styles.recipePage__title, styles.input)}
+            value={currentTitle}
             onChange={handleTitleChange}
-            placeholder='Recipe title'
+            placeholder="Recipe title"
           />
-          {emptyTitleError && <div className='error'>Please, give your recipe a title!</div>}
-          <div className={styles.recipePage__time}>
-            Time (in minutes):
-          </div>
-          <input 
-            type='number' 
-            className={cn(styles.recipe__time, styles.input, styles.input_time)} 
-            value={currentTime} 
-            onChange={handleTimeChange} 
-            min={0} 
+          {emptyTitleError && (
+            <div className="error">Please, give your recipe a title!</div>
+          )}
+          <div className={styles.recipePage__time}>Time (in minutes):</div>
+          <input
+            type="number"
+            className={cn(styles.recipe__time, styles.input, styles.input_time)}
+            value={currentTime}
+            onChange={handleTimeChange}
+            min={0}
             max={5000}
           />
           <div className={styles.recipePage__difficulty}>
             Difficulty:
-            <select 
+            <select
               className={styles.difficulty__value}
               value={currentDifficulty}
               onChange={handleDifficultyChange}
@@ -169,64 +171,68 @@ const AddRecipe = () => {
               <option value={1}>easy</option>
               <option value={2}>medium</option>
               <option value={3}>hard</option>
-            </select>        
+            </select>
           </div>
 
-          <div className={styles.section_changeCover} >
+          <div className={styles.section_changeCover}>
             <div>Set a cover image: </div>
-            <input type="file" accept="image/*" onChange={handleChangeCoverClick} />
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleChangeCoverClick}
+            />
           </div>
-          <Button className={styles.button_resetCover} onClick={handleResetCoverClick}>Reset cover</Button>
-
-        </div>         
+          <Button
+            className={styles.button_resetCover}
+            onClick={handleResetCoverClick}
+          >
+            Reset cover
+          </Button>
+        </div>
       </header>
       <div className={styles.recipePage__main}>
-        <div className="flex-wrapper">
-          <h2 className={styles.section__header}>Ingredients</h2>        
-          <Button 
-            className={styles.button_add} 
-            onClick={handleAddIngredientClick} 
-            variant={{isCRUD: true, isAdd: true}} 
+        <div className={styles.headerWrapper}>
+          <h2 className={styles.section__header}>Ingredients</h2>
+          <IconButton
+            className={styles.button_add}
+            onClick={handleAddIngredientClick}
+            icon={<PlusIcon />}
           />
         </div>
         <ul>
-          {
-            currentIngredients.map((item, index) => (
-            <EditableListItem 
-              key={item.id} 
+          {currentIngredients.map((item, index) => (
+            <EditableListItem
+              key={item.id}
               id={item.id}
-              initialValue={item.value} 
+              initialValue={item.value}
               index={index}
-              removeAction={handleRemoveIngredientClick} 
+              removeAction={handleRemoveIngredientClick}
               changeAction={handleIngredientChange}
               isEditing
-            /> 
-            ))
-          }
+            />
+          ))}
         </ul>
 
-        <div className="flex-wrapper">
+        <div className={styles.headerWrapper}>
           <h2 className={styles.section__header}>Steps</h2>
-          <Button 
-            className={styles.button_add} 
-            onClick={handleAddStepClick} 
-            variant={{isCRUD: true, isAdd: true}} 
+          <IconButton
+            className={styles.button_add}
+            onClick={handleAddStepClick}
+            icon={<PlusIcon />}
           />
         </div>
         <ol>
-          {
-            currentSteps.map((item, index) => (
-            <EditableListItem 
-              key={item.id} 
+          {currentSteps.map((item, index) => (
+            <EditableListItem
+              key={item.id}
               id={item.id}
-              initialValue={item.value} 
-              index={index} 
-              removeAction={handleRemoveStepClick} 
+              initialValue={item.value}
+              index={index}
+              removeAction={handleRemoveStepClick}
               changeAction={handleStepChange}
               isEditing
-            /> 
-            ))
-          }
+            />
+          ))}
         </ol>
         <Button onClick={handleSaveClick}>Save</Button>
         <Modal show={isModalShown} onHide={handleModalClose}>
@@ -234,9 +240,7 @@ const AddRecipe = () => {
             <Modal.Title>Recipe is successfully created!</Modal.Title>
           </Modal.Header>
           <Modal.Footer>
-            <Button onClick={handleModalClose}>
-              OK
-            </Button>
+            <Button onClick={handleModalClose}>OK</Button>
           </Modal.Footer>
         </Modal>
       </div>

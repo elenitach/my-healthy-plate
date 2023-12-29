@@ -1,10 +1,14 @@
 .header {
   padding-top: 20px;
   padding-bottom: 20px;
-  background-color: var(--nav-color);
+  background-color: var(--c-gray-0);
 }
 
 .container {
   display: flex;
   justify-content: space-between;
+}
+
+.button:hover {
+  background-color: var(--c-gray-1);
 }

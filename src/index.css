@@ -1,12 +1,23 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700;800&display=swap");
 
 :root {
-  --main-color: #131123;
-  --button-primary-color: #FF9053;
-  --nav-color: #F5F7F9;
-  --border-color: #E7EAE9;
-  --border-color-dark: #808080;
-  --recipe-background: #E1E2F6;
+  --c-text-main: #131123;
+  --c-primary: #283c57;
+  --c-primary-hover: #38547a;
+  --c-primary-disabled: #496c9d;
+  --c-white: #fff;
+  --c-gray-0: #f6f8fa;
+  --c-gray-1: #eaeef2;
+  --c-gray-2: #d0d7de;
+  --c-gray-3: #afb8c1;
+  --c-gray-4: #8c959f;
+  --c-gray-5: #6e7781;
+  --c-midnight: #1f2e43;
+  --c-recipe-background: #e6e1db;
+  --c-alert: #be3001;
+  --c-alert-hover: #e93a01;
+  --c-success: #04913f;
+  --c-success-hover: #05ba51;
 }
 
 * {
@@ -16,9 +27,9 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   font-size: 16px;
-  color: var(--main-color);
+  color: var(--c-text-main);
 }
 
 a {
@@ -53,9 +64,14 @@ a:hover {
   padding: 20px 30px;
 }
 
-h2 {
-  margin-top: 30px;
+h1 {
+  margin-top: 0;
   margin-bottom: 30px;
+}
+
+h2 {
+  margin-top: 0;
+  margin-bottom: 0;
   font-size: 1.5rem;
   font-weight: bold;
 }
@@ -68,6 +84,6 @@ h3 {
 }
 
 .error {
-  color: rgba(255, 0, 0, 0.781);
+  color: var(--c-alert);
   font-size: 0.9rem;
 }

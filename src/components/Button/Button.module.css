@@ -1,4 +1,4 @@
-.button {
+.root {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -6,45 +6,39 @@
   height: 44px;
   padding: 12px 20px;
   background-color: transparent;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--c-gray-1);
   border-radius: 12px;
-  color: var(--main-color);
+  color: var(--c-text-main);
   text-decoration: none;
   transition: all 0.1s ease;
   font-size: inherit;
 }
 
-.button:hover {
-  background-color: #f9fafb;
+.root:hover {
+  background-color: var(--c-gray-0);
   cursor: pointer;
 }
 
-.button_color_primary {
-  background-color: var(--button-primary-color);
-  color: #fff;
+.primary {
+  background-color: var(--c-primary);
+  color: var(--c-white);
 }
 
-
-.button_color_primary:hover {
-  background-color: hsl(21, 100%, 75%);
-  color: #fff;
+.primary:hover {
+  background-color: var(--c-primary-hover);
+  color: var(--c-white);
 }
 
-.button_logout::before {
-  content: "";
-  display: block;
-  width: 20px;
-  height: 20px;
-  margin-right: 3px;
-  background-image: url("./res/logout.svg");
-  background-repeat: no-repeat;
+.primary:disabled {
+  background-color: var(--c-primary-disabled)
 }
 
-.button_disabled {
-  background-color: hsl(21, 100%, 75%);;
+.iconWrapper {
+  margin-right: 8px;
+  line-height: 0;
 }
 
-.button_addRecipe {
+.addRecipe {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -52,18 +46,18 @@
   height: auto;
   min-height: 192px;
   padding: 8px;
-  background: var(--recipe-background);
+  background: var(--c-recipe-background);
   border-radius: 12px;
   cursor: pointer;
   transition: transform 0.2s ease;
 }
 
-.button_addRecipe:hover {
+.addRecipe:hover {
   transform: scale(1.01);
-  background: var(--recipe-background);
+  background: var(--c-recipe-background);
 }
 
-.button_addRecipe::before {
+.addRecipe::before {
   content: "";
   display: block;
   width: 17px;
@@ -73,45 +67,12 @@
   background-repeat: no-repeat;
 }
 
-.button_crud {
-  display: inline-block;
-  width: 12px;
-  height: 12px;
-  padding: 0;
-  background-size: contain;
-  background-repeat: no-repeat;
-  border: none;
-  border-radius: 0;
-}
-
-.button_crud:hover {
-  background-color: inherit;
-}
-
-.button_remove {
-  background-image: url("res/remove.png");
-}
-
-.button_accept {
-  background-image: url("res/accept.png");
-}
-
-.button_edit {
-  background-image: url("res/edit.png");
-}
-
-.button_add {
-  background-image: url("res/add.png");
-}
-
-.button_alert {
-  color: #fff;
+.alert {
+  color: var(--c-white);
   font-weight: bold;
-  background-color: red;
+  background-color: var(--c-alert);
 }
 
-.button_alert:hover {
-  color: #fff;
-  font-weight: bold;
-  background-color: #ff3d3d;
+.alert:hover {
+  background-color: var(--c-alert-hover);
 }

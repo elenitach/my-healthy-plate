@@ -7,7 +7,7 @@
   width: 120px;
   margin-bottom: 30px;
   padding: 12px 16px;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--c-gray-1);
   border-radius: 12px;
   outline: none;
 }

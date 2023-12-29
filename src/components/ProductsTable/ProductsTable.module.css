@@ -2,8 +2,13 @@
   width: 100%;
 }
 
-.button_add {
-  width: 20px;
-  height: 20px;
+.buttonAdd {
+  width: 40px;
+  height: 40px;
   margin: 15px 23px;
+  color: var(--c-primary);
+}
+
+.buttonAdd:hover {
+  color: var(--c-primary-hover);
 }

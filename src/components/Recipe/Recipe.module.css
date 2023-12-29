@@ -4,7 +4,7 @@
   justify-content: space-between;
   width: 240px;
   padding: 8px;
-  background: var(--recipe-background);
+  background: var(--c-recipe-background);
   border-radius: 12px;
   cursor: pointer;
   transition: transform 0.2s ease;

@@ -5,6 +5,7 @@ import { signOut } from 'firebase/auth';
 import { auth } from '../../firebaseConfig';
 import { logout, selectUser } from '../../redux/user/userSlice';
 import { useNavigate } from 'react-router-dom';
+import LogoutIcon from '../Icons/LogoutIcon';
 
 const HeaderAuth = () => {
   const dispatch = useDispatch();
@@ -26,7 +27,7 @@ const HeaderAuth = () => {
       </div>
       <Button
         onClick={handleClick}
-        variant={{isLogout: true}}
+        icon={<LogoutIcon />}
       >
         Log Out
       </Button>

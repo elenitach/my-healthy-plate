@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
-import Button from '../Button/Button';
 import styles from './ProductsTableRow.module.css';
 import cn from'classnames';
 import { requestString } from '../../fdcConfig';
 import { useDebounce } from 'use-debounce';
 import { kjToKcal, rounded } from '../../utils/converters';
+import IconButton from '../IconButton/IconButton';
+import RemoveIcon from '../Icons/RemoveIcon';
+import AcceptIcon from '../Icons/AcceptIcon';
 
 const ProductsTableRow = ({
   data, index, isHeader, isForm, 
@@ -18,14 +20,14 @@ const ProductsTableRow = ({
   const [showSearchResults, setShowSearchResults] = useState(false);
 
   const defaults = {
-    count: 0,
+    weight: 0,
     proteins: 0,
     fats: 0,
     carbohydrates: 0,
     energy: 0
   }
 
-  const [count, setCount] = useState(defaults.count);
+  const [weight, setWeight] = useState(defaults.weight);
   const [proteins, setProteins] = useState(defaults.proteins);
   const [fats, setFats] = useState(defaults.fats);
   const [carbohydrates, setCarbohydrates] = useState(defaults.carbohydrates);
@@ -72,7 +74,7 @@ const ProductsTableRow = ({
     setTitle(item.description);
     const weight = item.foodMeasures[0].gramWeight;
     setValues({
-      count: weight,
+      weight: weight,
       proteins: weight * getNutrient(item, 'Protein') / 100,
       fats: weight * getNutrient(item, 'Total lipid (fat)') / 100,
       carbohydrates: weight * getNutrient(item, 'Carbohydrate, by difference') / 100,
@@ -81,13 +83,13 @@ const ProductsTableRow = ({
     setShowSearchResults(false);
   }
 
-  const handleCountChange = (event) => {
+  const handleWeightChange = (event) => {
     if (event.target.value.length < 5) {
       const weight = event.target.value === '' ? 0 : parseInt(event.target.value);
-      setCount(weight);
+      setWeight(weight);
       if (productToAdd) {
         setValues({
-          count: weight,
+          weight: weight,
           proteins: weight * getNutrient(productToAdd, 'Protein') / 100,
           fats: weight * getNutrient(productToAdd, 'Total lipid (fat)') / 100, 
           carbohydrates: weight * getNutrient(productToAdd, 'Carbohydrate, by difference') / 100, 
@@ -98,7 +100,7 @@ const ProductsTableRow = ({
   }
 
   const setValues = (values) => {
-    setCount(values.count);
+    setWeight(values.weight);
     setProteins(rounded(values.proteins, 2));
     setFats(rounded(values.fats, 2));
     setCarbohydrates(rounded(values.carbohydrates, 2));
@@ -120,11 +122,11 @@ const ProductsTableRow = ({
               onChange={handleTitleChange}
               onFocus={() => setShowSearchResults(true)}
             /> 
-            <Button 
-              className={styles.button_accept}
-              variant={{isCRUD: true, isAccept: true}} 
+            <IconButton 
+              className={styles.buttonAccept}
+              icon={<AcceptIcon />}
               onClick={() => productToAdd && handleAcceptClick({
-                title, count, proteins, fats, carbohydrates, energy
+                title, weight, proteins, fats, carbohydrates, energy
               })}
             />
           </div>
@@ -145,8 +147,8 @@ const ProductsTableRow = ({
             min={0} 
             max={9999} 
             className={cn(styles.input, styles.input_number)} 
-            value={count} 
-            onChange={handleCountChange} 
+            value={weight} 
+            onChange={handleWeightChange} 
           />
         </td>
         <td className={tdClasses}>{proteins}</td>
@@ -154,9 +156,9 @@ const ProductsTableRow = ({
         <td className={tdClasses}>{carbohydrates}</td>
         <td className={tdClasses}>{energy}</td>
         <td className={tdClasses}>
-          <Button 
-            className={styles.button_remove} 
-            variant={{isCRUD: true, isRemove: true}} 
+          <IconButton 
+            className={styles.buttonRemove}
+            icon={<RemoveIcon />}
             onClick={handleCancelProductAdding}
           />
         </td>
@@ -173,7 +175,7 @@ const ProductsTableRow = ({
           }
         </td>
         <td className={cn(tdClasses, styles.td_wide, isHeader ? '' : styles.td_product)}>{data.title}</td>
-        <td className={tdClasses}>{data.count}</td>
+        <td className={tdClasses}>{data.weight}</td>
         <td className={tdClasses}>{data.proteins}</td>
         <td className={tdClasses}>{data.fats}</td>
         <td className={tdClasses}>{data.carbohydrates}</td>
@@ -181,9 +183,9 @@ const ProductsTableRow = ({
         <td className={tdClasses}>
           {
           !isHeader && 
-          <Button 
-            className={styles.button_remove} 
-            variant={{isCRUD: true, isRemove: true}} 
+          <IconButton 
+            className={styles.buttonRemove}
+            icon={<RemoveIcon />}
             onClick={() => {handleRemoveClick(data.id)}}
           />
           }

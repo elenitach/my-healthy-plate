@@ -85,7 +85,7 @@ const Dashboard = () => {
   return (
       <main>
         <RecipesContainer>
-          <ButtonLink link={'/add_recipe'} variant={{addRecipe: true}}>
+          <ButtonLink link={'/add_recipe'} variant="addRecipe">
             {buttonText}
           </ButtonLink>
           {

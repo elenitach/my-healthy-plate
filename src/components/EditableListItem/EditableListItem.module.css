@@ -1,13 +1,48 @@
 .item {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 12px;
   height: 25px;
   margin-bottom: 5px;
 }
 
+.value {
+  padding: 4px;
+  border: 1px solid transparent;
+}
+
 .input {
   height: 25px;
+  padding: 4px;
   outline: none;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--c-gray-1);
+}
+
+.button {
+  width: 16px;
+  height: 16px;
+}
+
+.buttonAccept {
+  color: var(--c-success);
+}
+
+.buttonAccept:hover {
+  color: var(--c-success-hover);
+}
+
+.buttonEdit {
+  color: var(--c-gray-4);
+}
+
+.buttonEdit:hover {
+  color: var(--c-gray-3);
+}
+
+.buttonRemove {
+  color: var(--c-alert);
+}
+
+.buttonRemove:hover {
+  color: var(--c-alert-hover);
 }

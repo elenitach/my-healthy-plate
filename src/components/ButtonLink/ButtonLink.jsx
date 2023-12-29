@@ -1,23 +1,18 @@
-import { Link } from 'react-router-dom';
-import styles from '../Button/Button.module.css';
-import cn from 'classnames';
+import { Link } from "react-router-dom";
+import styles from "../Button/Button.module.css";
+import clsx from "clsx";
 
-const ButtonLink = ({className, link, variant, children}) => {
-  const btnClasses = cn(
-    className, 
-    styles.button, 
-    variant?.isPrimary ? styles.button_color_primary : '',
-    variant?.addRecipe ? styles.button_addRecipe : ''
-    );
+const ButtonLink = ({ className, link, variant, children }) => {
+  const btnClasses = clsx(className, styles.root, {
+    [styles.primary]: variant === "primary",
+    [styles.addRecipe]: variant === "addRecipe",
+  });
 
   return (
-    <Link 
-      to={link} 
-      className={btnClasses}
-    >
+    <Link to={link} className={btnClasses}>
       {children}
     </Link>
   );
-}
+};
 
 export default ButtonLink;

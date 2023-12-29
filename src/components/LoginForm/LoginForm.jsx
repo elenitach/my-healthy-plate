@@ -91,7 +91,7 @@ const LoginForm = () => {
 
         <Button 
           className={styles.form__button} 
-          variant={{isPrimary: true}}
+          variant="primary"
           disabled={loading}
         >
           LOG IN

@@ -5,6 +5,8 @@ import styles from './ProductsTable.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { addProduct, deleteProduct, selectDate } from '../../redux/products/productsSlice';
 import { selectUser } from '../../redux/user/userSlice';
+import IconButton from '../IconButton/IconButton';
+import PlusIcon from '../Icons/PlusIcon';
 
 const ProductsTable = ({products}) => {
   const [isRowAdding, setIsRowAdding] = useState(false);
@@ -19,7 +21,7 @@ const ProductsTable = ({products}) => {
 
   const headerData = {
     title: 'product', 
-    count: 'count (g)', 
+    weight: 'weight (g)', 
     proteins: 'proteins (g)', 
     fats: 'fats (g)',
     carbohydrates: 'carbs (g)',
@@ -45,32 +47,30 @@ const ProductsTable = ({products}) => {
 
   return (
     <>
-    <table className={styles.table}>
-      <ProductsTableRow 
-        isHeader
-        data={headerData} 
+      <table className={styles.table}>
+        <ProductsTableRow isHeader data={headerData} />
+        {currentProducts.map((item, index) => (
+          <ProductsTableRow
+            key={item.id}
+            data={item}
+            index={index}
+            handleRemoveClick={handleRemoveClick}
+          />
+        ))}
+        {isRowAdding && (
+          <ProductsTableRow
+            isForm
+            index={products.length}
+            handleCancelProductAdding={() => setIsRowAdding(false)}
+            handleAcceptClick={handleAcceptClick}
+          />
+        )}
+      </table>
+      <IconButton
+        className={styles.buttonAdd}
+        onClick={handleAddClick}
+        icon={<PlusIcon />}
       />
-      {
-      currentProducts.map(
-        (item, index) => 
-        <ProductsTableRow 
-          key={item.id} 
-          data={item} 
-          index={index} 
-          handleRemoveClick={handleRemoveClick} 
-        />)
-      }    
-      {
-      isRowAdding && 
-      <ProductsTableRow 
-        isForm 
-        index={products.length} 
-        handleCancelProductAdding={() => setIsRowAdding(false)} 
-        handleAcceptClick={handleAcceptClick}
-      />
-      }
-    </table>
-    <Button className={styles.button_add} variant={{isCRUD: true, isAdd: true}} onClick={handleAddClick} />
     </>
   );
 }

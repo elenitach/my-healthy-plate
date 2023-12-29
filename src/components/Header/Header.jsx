@@ -11,7 +11,7 @@ const Header = ({loginButtonRequired}) => {
         <Link to={"/"}>
           <img src={logo} alt="My healthy plate logo" />
         </Link>
-        {loginButtonRequired && <ButtonLink link={"/login"}>Log In</ButtonLink>}
+        {loginButtonRequired && <ButtonLink className={styles.button} link={"/login"}>Log In</ButtonLink>}
       </div>
     </header>
   );

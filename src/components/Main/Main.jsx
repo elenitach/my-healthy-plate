@@ -4,18 +4,18 @@ import styles from './Main.module.css';
 const Main = () => {
   return (
       <div className={styles.main}>
-        <h1 className={styles.main__header}>
+        <h1 className={styles.header}>
           Healthy plate - 
           <br />
           better life
         </h1>
-        <div>
+        <div className={styles.text}>
           Plan your diet. Achieve nutrients goals. Make own recipes.
         </div>
         <ButtonLink
-          className={styles.main__button}
+          className={styles.button}
           link='/signup'
-          variant={{isPrimary: true}}
+          variant="primary"
         >
           Join us!
         </ButtonLink>

@@ -1,16 +1,42 @@
-.main__button {
+.button {
   margin-top: 30px;
   font-weight: 700;
 }
 
 .main {
-  background: url(./res/food.png) no-repeat 90%;
+  background: url(./res/food.png) no-repeat;
+  background-position-x: 90%;
   background-size: contain;
-  padding: 40px 0;
+  padding: 70px 0;
 }
 
-.main__header {
+.header {
   font-weight: 800;
   font-size: 3.5em;
-  padding-top: 80px;
+}
+
+@media (max-width: 992px) {
+  .main {
+    background-position-x: 100%;
+    background-position-y: 70px;
+    background-size: 30%;
+  }
+}
+
+@media (max-width: 768px) {
+  .main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: none;
+  }
+
+  .header {
+    text-align: center;
+    font-size: 3em;
+  }
+
+  .text {
+    text-align: center;
+  }
 }

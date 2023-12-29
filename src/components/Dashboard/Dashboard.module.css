@@ -13,7 +13,7 @@
   border-radius: 12px !important;
 }
 
-.macronutrients {  
+.macronutrients {
   width: 452px;
   margin-right: 90px;
 }
@@ -23,5 +23,6 @@
 }
 
 .calendar {
+  --moedim-primary: var(--c-primary) !important;
   margin-top: 89px;
 }

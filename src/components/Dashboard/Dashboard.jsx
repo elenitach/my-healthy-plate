@@ -27,6 +27,7 @@ import {
   getEnergyFromActivityLevel,
   proteinsInGramsFromEnergy,
 } from "../../utils/equations";
+import { Spinner } from "react-bootstrap";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
@@ -49,11 +50,11 @@ const Dashboard = () => {
     } else if (recipesStatus !== "loading") {
       setButtonText("New recipe");
     }
-  }, [recipesStatus, dispatch, user.id, recipes.length]);
+  }, [dispatch, recipesStatus, user, recipes]);
 
   useEffect(() => {
     dispatch(fetchProducts({ userId: user.id, date }));
-  }, []);
+  }, [dispatch, user, date]);
 
   useEffect(() => {
     const bmr = BMR(
@@ -102,18 +103,10 @@ const Dashboard = () => {
         left: Math.max(0, totalEnergy - energyConsumed),
       },
     ]);
-  }, [
-    products,
-    user.birthDate,
-    user.activityLevel,
-    user.height,
-    user.weight,
-    user.isMale,
-  ]);
+  }, [products, user]);
 
   const handleDateChange = (value) => {
     setDate(value);
-    dispatch(fetchProducts({ userId: user.id, date: value }));
   };
 
   return (
@@ -137,7 +130,13 @@ const Dashboard = () => {
         <div className={styles.statistics}>
           <h3 className={styles.statistics__header}>Macronutrient targets</h3>
           <div className={cn(styles.statistics__data, styles.macronutrients)}>
-            <Chart data={chartData} />
+            {productsStatus === "loading" ? (
+              <div className={styles.chartSpinnerWrapper}>
+                <Spinner />
+              </div>
+            ) : (
+              <Chart data={chartData} />
+            )}
           </div>
         </div>
         <Calendar
@@ -151,9 +150,15 @@ const Dashboard = () => {
         />
       </section>
       <div className={styles.statistics}>
-        <h3 className={styles.statistics__header}>Today`s products</h3>
+        <h3 className={styles.statistics__header}>
+          <span>Today`s products</span>
+          {productsStatus === "loading" && (
+            <Spinner className={styles.headerSpinner} size="sm" />
+          )}
+        </h3>
+
         <div className={cn(styles.statistics__data, styles.table)}>
-          <ProductsTable products={products} date={date} />
+          <ProductsTable date={date} />
         </div>
       </div>
     </main>

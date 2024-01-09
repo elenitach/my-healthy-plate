@@ -14,8 +14,17 @@
 }
 
 .macronutrients {
+  display: block;
   width: 452px;
+  height: 310px;
   margin-right: 90px;
+}
+
+.chartSpinnerWrapper {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .table {
@@ -25,4 +34,8 @@
 .calendar {
   --moedim-primary: var(--c-primary) !important;
   margin-top: 89px;
+}
+
+.headerSpinner {
+  margin-left: 0.5rem;
 }

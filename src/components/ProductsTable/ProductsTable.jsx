@@ -1,46 +1,58 @@
-import { useEffect, useState } from 'react';
-import ProductsTableRow from '../ProductsTableRow/ProductsTableRow';
-import styles from './ProductsTable.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { addProduct, deleteProduct } from '../../redux/products/productsSlice';
-import { selectUser } from '../../redux/user/userSlice';
-import IconButton from '../IconButton/IconButton';
-import PlusIcon from '../Icons/PlusIcon';
+import { useEffect, useState } from "react";
+import ProductsTableRow from "../ProductsTableRow/ProductsTableRow";
+import styles from "./ProductsTable.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addProduct,
+  deleteProduct,
+  selectProducts,
+} from "../../redux/products/productsSlice";
+import { selectUser } from "../../redux/user/userSlice";
+import IconButton from "../IconButton/IconButton";
+import PlusIcon from "../Icons/PlusIcon";
 
-const ProductsTable = ({products, date}) => {
-  const [isRowAdding, setIsRowAdding] = useState(false);
-  const [currentProducts, setCurrentProducts] = useState([...products])
+const ProductsTable = ({ date }) => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
+  const products = useSelector(selectProducts);
+  const productsStatus = useSelector((state) => state.products.status);
+  const [isRowAdding, setIsRowAdding] = useState(false);
+  const [currentProducts, setCurrentProducts] = useState([...products]);
 
   useEffect(() => {
-    setCurrentProducts([...products]);
-  }, [products]);
+    if (productsStatus === "loading") {
+      setCurrentProducts([]);
+    } else {
+      setCurrentProducts([...products]);
+    }
+  }, [productsStatus, products]);
 
   const headerData = {
-    title: 'product', 
-    weight: 'weight (g)', 
-    proteins: 'proteins (g)', 
-    fats: 'fats (g)',
-    carbohydrates: 'carbs (g)',
-    energy: 'energy (kcal)'
+    title: "product",
+    weight: "weight (g)",
+    proteins: "proteins (g)",
+    fats: "fats (g)",
+    carbohydrates: "carbs (g)",
+    energy: "energy (kcal)",
   };
 
   const handleAddClick = () => {
     if (isRowAdding) return;
     setIsRowAdding(true);
-  }
+  };
 
   const handleAcceptClick = (item) => {
     setIsRowAdding(false);
     setCurrentProducts([...currentProducts, item]);
-    dispatch(addProduct({...item, userId: user.id, timestamp: new Date(), date}));
-  }
+    dispatch(
+      addProduct({ ...item, userId: user.id, timestamp: new Date(), date })
+    );
+  };
 
   const handleRemoveClick = (productId) => {
-    setCurrentProducts(currentProducts.filter(item => item.id !== productId));
+    setCurrentProducts(currentProducts.filter((item) => item.id !== productId));
     dispatch(deleteProduct(productId));
-  }
+  };
 
   return (
     <>
@@ -70,6 +82,6 @@ const ProductsTable = ({products, date}) => {
       />
     </>
   );
-}
+};
 
 export default ProductsTable;

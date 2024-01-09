@@ -1,18 +1,16 @@
 import { useEffect, useState } from 'react';
-import Button from '../Button/Button';
 import ProductsTableRow from '../ProductsTableRow/ProductsTableRow';
 import styles from './ProductsTable.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { addProduct, deleteProduct, selectDate } from '../../redux/products/productsSlice';
+import { addProduct, deleteProduct } from '../../redux/products/productsSlice';
 import { selectUser } from '../../redux/user/userSlice';
 import IconButton from '../IconButton/IconButton';
 import PlusIcon from '../Icons/PlusIcon';
 
-const ProductsTable = ({products}) => {
+const ProductsTable = ({products, date}) => {
   const [isRowAdding, setIsRowAdding] = useState(false);
   const [currentProducts, setCurrentProducts] = useState([...products])
   const dispatch = useDispatch();
-  const date = useSelector(selectDate);
   const user = useSelector(selectUser);
 
   useEffect(() => {
@@ -31,13 +29,12 @@ const ProductsTable = ({products}) => {
   const handleAddClick = () => {
     if (isRowAdding) return;
     setIsRowAdding(true);
-
   }
 
   const handleAcceptClick = (item) => {
     setIsRowAdding(false);
     setCurrentProducts([...currentProducts, item]);
-    dispatch(addProduct({...item, userId: user.id, date, timestamp: new Date()}));
+    dispatch(addProduct({...item, userId: user.id, timestamp: new Date(), date}));
   }
 
   const handleRemoveClick = (productId) => {

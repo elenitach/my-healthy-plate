@@ -3,7 +3,6 @@ import { addDoc, collection, deleteDoc, doc, getDocs, query, where } from "fireb
 import { db } from "../../firebaseConfig";
 
 const initialState = {
-  date: null,
   items: [],
   status: 'idle'
 };
@@ -11,11 +10,6 @@ const initialState = {
 export const productsSlice = createSlice({
   name: 'products',
   initialState,
-  reducers: {
-    changeDate: (state, action) => {
-      state.date = action.payload;
-    }
-  },
   extraReducers(builder) {
     builder
       .addCase('user/logout', (state, action) => {
@@ -41,9 +35,9 @@ export const fetchProducts = createAsyncThunk('products/fetchProducts', (data) =
   return new Promise(async (resolve, reject) => {
     try {
       const q = query(
-        collection(db, 'products'), 
-        where('userId', '==', data.userId), 
-        where('date', '==', data.date)
+        collection(db, "products"),
+        where("userId", "==", data.userId),
+        where('date', "==", data.date)
       );
       const querySnapshot = await getDocs(q);
       const products = [];
@@ -52,6 +46,7 @@ export const fetchProducts = createAsyncThunk('products/fetchProducts', (data) =
       });
       resolve(products.sort((p1, p2) => p1.timestamp - p2.timestamp));
     } catch(err) {
+      console.error(err);
       reject(err);
     }
   });
@@ -79,9 +74,7 @@ export const deleteProduct = createAsyncThunk('products/deleteProduct', (id) => 
   })
 })
 
-export const selectDate = (state) => state.products.date;
 export const selectProducts = (state) => state.products.items;
 export const selectProductsStatus = (state) => state.products.status;
 
-export const { changeDate } = productsSlice.actions;
 export default productsSlice.reducer;

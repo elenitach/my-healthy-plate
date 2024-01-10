@@ -89,3 +89,7 @@
 .buttonAccept:hover {
   color: var(--c-success-hover);
 }
+
+.productAddingSpinner {
+  margin-left: 0.5rem;
+}

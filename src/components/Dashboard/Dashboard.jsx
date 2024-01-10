@@ -126,7 +126,7 @@ const Dashboard = () => {
           />
         ))}
       </RecipesContainer>
-      <section class="flex-wrapper">
+      <section className="flex-wrapper">
         <div className={styles.statistics}>
           <h3 className={styles.statistics__header}>Macronutrient targets</h3>
           <div className={cn(styles.statistics__data, styles.macronutrients)}>

@@ -18,6 +18,10 @@ const ProductsTable = ({ date }) => {
   const productsStatus = useSelector((state) => state.products.status);
   const [isRowAdding, setIsRowAdding] = useState(false);
   const [currentProducts, setCurrentProducts] = useState([...products]);
+  const [isProductAdding, setIsProductAdding] = useState(false);
+  const [isRowDeleting, setIsRowDeleting] = useState(
+    new Array(products.length).fill(false)
+  );
 
   useEffect(() => {
     if (productsStatus === "loading") {
@@ -41,39 +45,62 @@ const ProductsTable = ({ date }) => {
     setIsRowAdding(true);
   };
 
-  const handleAcceptClick = (item) => {
-    setIsRowAdding(false);
-    setCurrentProducts([...currentProducts, item]);
-    dispatch(
-      addProduct({ ...item, userId: user.id, timestamp: new Date(), date })
-    );
+  const handleAcceptClick = async (item) => {
+    try {
+      setIsProductAdding(true);
+      await dispatch(
+        addProduct({ ...item, userId: user.id, timestamp: new Date(), date })
+      ).unwrap();
+      setIsRowAdding(false);
+      setIsRowDeleting(new Array(products.length + 1).fill(false));
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsProductAdding(false);
+    }
   };
 
-  const handleRemoveClick = (productId) => {
-    setCurrentProducts(currentProducts.filter((item) => item.id !== productId));
-    dispatch(deleteProduct(productId));
+  const handleRemoveClick = async (productId, index) => {
+    try {
+      setIsRowDeleting(
+        isRowDeleting
+          .slice(0, index)
+          .concat(true, ...isRowDeleting.slice(index + 1))
+      );
+      await dispatch(deleteProduct(productId)).unwrap();
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsRowDeleting(new Array(products.length - 1).fill(false));
+    }
   };
 
   return (
     <>
       <table className={styles.table}>
-        <ProductsTableRow isHeader data={headerData} />
-        {currentProducts.map((item, index) => (
-          <ProductsTableRow
-            key={item.id}
-            data={item}
-            index={index}
-            handleRemoveClick={handleRemoveClick}
-          />
-        ))}
-        {isRowAdding && (
-          <ProductsTableRow
-            isForm
-            index={products.length}
-            handleCancelProductAdding={() => setIsRowAdding(false)}
-            handleAcceptClick={handleAcceptClick}
-          />
-        )}
+        <thead>
+          <ProductsTableRow isHeader data={headerData} />
+        </thead>
+        <tbody>
+          {currentProducts.map((item, index) => (
+            <ProductsTableRow
+              key={item.id}
+              data={item}
+              index={index}
+              handleRemoveClick={() => handleRemoveClick(item.id, index)}
+              isRowDeleting={isRowDeleting[index]}
+            />
+          ))}
+          {isRowAdding && (
+            <ProductsTableRow
+              isForm
+              index={products.length}
+              handleCancelProductAdding={() => setIsRowAdding(false)}
+              handleAcceptClick={handleAcceptClick}
+              isProductAdding={isProductAdding}
+            />
+          )}
+        </tbody>
       </table>
       <IconButton
         className={styles.buttonAdd}

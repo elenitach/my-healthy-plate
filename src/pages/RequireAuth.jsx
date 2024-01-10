@@ -12,7 +12,7 @@ const RequireAuth = ({children}) => {
   return (
     <div className="container flex-wrapper">
       <NavBar />
-      <div class="page-content">
+      <div className="page-content">
         <HeaderAuth />
         {children}
       </div>

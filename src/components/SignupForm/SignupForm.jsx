@@ -206,7 +206,7 @@ const SignupForm = () => {
             checked={isMale}
             onChange={handleGenderChange}
           />
-          <label for="male">Male</label>
+          <label htmlFor="male">Male</label>
         </div>
         <div className={styles.radio__item}>
           <input
@@ -222,7 +222,7 @@ const SignupForm = () => {
             checked={!isMale}
             onChange={handleGenderChange}
           />
-          <label for="female">Female</label>
+          <label htmlFor="female">Female</label>
         </div>
       </div>
       <div className={styles.form__item}>Birth date</div>

@@ -1,0 +1,12 @@
+.errorIcon {
+  color: var(--c-alert);
+}
+
+.placementRight { 
+  margin-left: 8px;
+}
+
+.errorIcon svg {
+  width: 20px;
+  height: 20px;
+}

@@ -52,10 +52,12 @@ input:focus {
   display: inline;
 }
 
-.error {
-  margin: 20px 0;
-  text-align: center;
-  color: #ff0000;
+.errorInput {
+  border-color: var(--c-alert);
+}
+
+.errorInput:focus {
+  border-color: var(--c-alert-hover);
 }
 
 .section__header {
@@ -91,5 +93,9 @@ input:focus {
 }
 
 .input_required {
-  color: red;
+  color: var(--c-alert);
+}
+
+.buttonSpinner {
+  margin-left: 8px;
 }

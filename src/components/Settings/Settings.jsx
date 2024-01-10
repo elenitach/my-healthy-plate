@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { selectUser, updateUser } from "../../redux/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-import Form from '../Form/Form';
-import styles from '../Form/Form.module.css';
+import Form from '../AuthForm/AuthForm';
+import styles from '../AuthForm/AuthForm.module.css';
 import cn from 'classnames';
 import Button from "../Button/Button";
 import { Modal } from "react-bootstrap";

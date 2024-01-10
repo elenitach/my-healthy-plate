@@ -1,6 +1,6 @@
 export const userDefaultData = {
   isMale: true,
-  birthDate: "2000-01-01",
-  height: "170",
-  weight: "60",
+  birthDate: `${new Date().getFullYear() - 30}-01-01` ,
+  height: "180",
+  weight: "70",
 };

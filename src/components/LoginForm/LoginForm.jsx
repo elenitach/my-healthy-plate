@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Form from "../AuthForm/AuthForm";
 import styles from "../AuthForm/AuthForm.module.css";
-import cn from "classnames";
 import Button from "../Button/Button";
 import ButtonLink from "../ButtonLink/ButtonLink";
 import { userDefaultData } from "../../utils/constants";

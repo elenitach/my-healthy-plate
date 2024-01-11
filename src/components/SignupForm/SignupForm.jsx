@@ -150,7 +150,7 @@ const SignupForm = () => {
           email,
           password
         );
-        const nameToStore = name === "" ? "user" : name;
+        const nameToStore = name === "" ? userDefaultData.name : name;
         try {
           await setDoc(doc(db, "users", userAuth.user.uid), {
             name: nameToStore,
@@ -158,6 +158,7 @@ const SignupForm = () => {
             birthDate,
             height: +height,
             weight: +weight,
+            activityLevel: 2,
           });
         } catch (err) {
           console.log(err);

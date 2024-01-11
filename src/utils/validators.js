@@ -29,3 +29,4 @@ export const INVALID_BMR_ERROR_MESSAGE = "Check if all the fields are correct";
 export const PASSWORDS_DO_NOT_MATCH_ERROR_MESSAGE =
   "The passwords do not match";
 export const EXISTING_EMAIL_ERROR_MESSAGE = 'This email is already in use';
+export const LOGIN_ERROR = 'Invalid email or password';

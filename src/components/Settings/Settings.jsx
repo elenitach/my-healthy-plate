@@ -5,7 +5,7 @@ import Form from "../AuthForm/AuthForm";
 import styles from "../AuthForm/AuthForm.module.css";
 import cn from "classnames";
 import Button from "../Button/Button";
-import { Modal, Spinner } from "react-bootstrap";
+import { Spinner, Toast, ToastBody, ToastContainer, ToastHeader } from "react-bootstrap";
 import { BMR, getEnergyFromActivityLevel } from "../../utils/equations";
 import { getAgeFromBirthdate } from "../../utils/converters";
 import {
@@ -30,7 +30,8 @@ const Settings = () => {
   const [height, setHeight] = useState(user.height);
   const [weight, setWeight] = useState(user.weight);
   const [activityLevel, setActivityLevel] = useState(user.activityLevel || 0);
-  const [isModalShown, setIsModalShown] = useState(false);
+  const [isToastSuccessShown, setIsToastSuccessShown] = useState(false);
+  const [isToastErrorShown, setIsToastErrorShown] = useState(false);
 
   const [birthDateError, setBirthDateError] = useState(null);
   const [heightError, setHeightError] = useState(null);
@@ -119,17 +120,14 @@ const Settings = () => {
             activityLevel,
           })
         ).unwrap();
-        setIsModalShown(true);
+        setIsToastSuccessShown(true);
       } catch (err) {
         console.log(err);
+        setIsToastErrorShown(true);
       }
     }
 
     setLoading(false);
-  };
-
-  const handleModalClose = () => {
-    setIsModalShown(false);
   };
 
   const bmr = BMR(
@@ -254,14 +252,33 @@ const Settings = () => {
       <Button>
         Save{loading && <Spinner className={styles.buttonSpinner} size="sm" />}
       </Button>
-      <Modal show={isModalShown} onHide={handleModalClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Data is successfully updated!</Modal.Title>
-        </Modal.Header>
-        <Modal.Footer>
-          <Button onClick={handleModalClose}>OK</Button>
-        </Modal.Footer>
-      </Modal>
+
+      <ToastContainer
+        className="p-3"
+        containerPosition="fixed"
+        position="bottom-end"
+      >
+        <Toast
+          onClose={() => setIsToastSuccessShown(false)}
+          show={isToastSuccessShown}
+          autohide
+          delay={3000}
+          bg="success"
+        >
+          <ToastHeader closeButton={false}>Success</ToastHeader>
+          <ToastBody>The data is saved!</ToastBody>
+        </Toast>
+        <Toast
+          onClose={() => setIsToastErrorShown(false)}
+          show={isToastErrorShown}
+          autohide
+          delay={3000}
+          bg="danger"
+        >
+          <ToastHeader closeButton={false}>Error</ToastHeader>
+          <ToastBody>Something went wrong...</ToastBody>
+        </Toast>
+      </ToastContainer>
     </Form>
   );
 };

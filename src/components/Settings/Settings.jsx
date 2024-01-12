@@ -242,14 +242,14 @@ const Settings = () => {
       </select>
 
       {birthDate !== "" && bmr > 0 && (
-        <div className={styles.form__item}>
+        <div className={styles.bmrInfo}>
           Total energy burned: {bmr + activityEnergy} kcal
           <br />
           (BMR: {bmr} kcal + Activity: {activityEnergy} kcal)
         </div>
       )}
 
-      <Button>
+      <Button variant="primary">
         Save{loading && <Spinner className={styles.buttonSpinner} size="sm" />}
       </Button>
 

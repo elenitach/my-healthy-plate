@@ -6,3 +6,5 @@ export const userDefaultData = {
   weight: "70",
   activityLevel: 2,
 };
+
+export const INFINITE_RECIPE_TIME = 2880;

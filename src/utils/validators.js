@@ -30,3 +30,5 @@ export const PASSWORDS_DO_NOT_MATCH_ERROR_MESSAGE =
   "The passwords do not match";
 export const EXISTING_EMAIL_ERROR_MESSAGE = 'This email is already in use';
 export const LOGIN_ERROR = 'Invalid email or password';
+
+export const EMPTY_RECIPE_TITLE_ERROR_MESSAGE = "Please, give your recipe a title!";

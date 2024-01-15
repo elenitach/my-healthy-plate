@@ -1,30 +1,32 @@
-import { useNavigate } from 'react-router-dom';
-import EditableListItem from '../EditableListItem/EditableListItem';
-import styles from '../RecipeInfo/RecipeInfo.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
-import Button from '../Button/Button';
-import { uid } from 'uid';
-import { addRecipe } from '../../redux/recipes/recipesSlice';
-import cn from 'classnames';
-import { selectUser } from '../../redux/user/userSlice';
-import { Modal } from 'react-bootstrap';
-import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
-import { storage } from '../../firebaseConfig';
-import IconButton from '../IconButton/IconButton';
-import PlusIcon from '../Icons/PlusIcon';
+import { useNavigate } from "react-router-dom";
+import EditableListItem from "../EditableListItem/EditableListItem";
+import styles from "../RecipeInfo/RecipeInfo.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import Button from "../Button/Button";
+import { uid } from "uid";
+import { addRecipe } from "../../redux/recipes/recipesSlice";
+import cn from "classnames";
+import { selectUser } from "../../redux/user/userSlice";
+import { Modal, Spinner } from "react-bootstrap";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { storage } from "../../firebaseConfig";
+import IconButton from "../IconButton/IconButton";
+import PlusIcon from "../Icons/PlusIcon";
+import { EMPTY_RECIPE_TITLE_ERROR_MESSAGE } from "../../utils/validators";
+import { INFINITE_RECIPE_TIME } from "../../utils/constants";
 
 const AddRecipe = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [currentTitle, setCurrentTitle] = useState('');
-  const [currentTime, setCurrentTime] = useState(0);
+  const [currentTitle, setCurrentTitle] = useState("");
+  const [currentTime, setCurrentTime] = useState("");
   const [currentDifficulty, setCurrentDifficulty] = useState(1);
   const [currentIngredients, setCurrentIngredients] = useState([]);
   const [currentSteps, setCurrentSteps] = useState([]);
-  const [currentCover, setCurrentCover] = useState('');
-  const [addStatus, setAddStatus] = useState('idle');
+  const [currentCover, setCurrentCover] = useState("");
+  const [loading, setLoading] = useState(false);
   const [isModalShown, setIsModalShown] = useState(false);
   const [emptyTitleError, setEmptyTitleError] = useState(false);
   const [coverId] = useState(uid());
@@ -32,89 +34,98 @@ const AddRecipe = () => {
   const user = useSelector(selectUser);
 
   const handleTitleChange = (event) => {
-    setEmptyTitleError(event.target.value === '');
+    setEmptyTitleError(event.target.value === "");
     setCurrentTitle(event.target.value);
-  }
+  };
 
   const handleTimeChange = (event) => {
-    const value = event.target.value;
-    setCurrentTime(value === '' ? 0 : parseInt(value));
-  }
+    setCurrentTime(event.target.value);
+  };
 
   const handleDifficultyChange = (event) => {
     setCurrentDifficulty(parseInt(event.target.value));
-  }
+  };
 
   const handleRemoveIngredientClick = (index) => {
     const updatedIngredients = [
       ...currentIngredients.slice(0, index),
-      ...currentIngredients.slice(index + 1)];
-    setCurrentIngredients(updatedIngredients);  
-  }
+      ...currentIngredients.slice(index + 1),
+    ];
+    setCurrentIngredients(updatedIngredients);
+  };
 
   const handleAddIngredientClick = () => {
-    if (currentIngredients.at(-1)?.value !== '') {
-      setCurrentIngredients([...currentIngredients, {id: uid(), value: ''}]);
+    if (currentIngredients.at(-1)?.value !== "") {
+      setCurrentIngredients([...currentIngredients, { id: uid(), value: "" }]);
     }
-  }
+  };
 
   const handleIngredientChange = (index, item) => {
     setCurrentIngredients([
       ...currentIngredients.slice(0, index),
       item,
-      ...currentIngredients.slice(index+1)
+      ...currentIngredients.slice(index + 1),
     ]);
-  }
+  };
 
   const handleRemoveStepClick = (index) => {
     const updatedSteps = [
       ...currentSteps.slice(0, index),
-      ...currentSteps.slice(index + 1)];
-    setCurrentSteps(updatedSteps);   
-  }
+      ...currentSteps.slice(index + 1),
+    ];
+    setCurrentSteps(updatedSteps);
+  };
 
   const handleAddStepClick = () => {
-    if (currentSteps.at(-1)?.value !== '') {
-      setCurrentSteps([...currentSteps, {id: uid(), value: ''}]);
+    if (currentSteps.at(-1)?.value !== "") {
+      setCurrentSteps([...currentSteps, { id: uid(), value: "" }]);
     }
-  }
+  };
 
   const handleStepChange = (index, item) => {
     setCurrentSteps([
       ...currentSteps.slice(0, index),
       item,
-      ...currentSteps.slice(index+1)
+      ...currentSteps.slice(index + 1),
     ]);
-  }
+  };
 
   const handleSaveClick = async () => {
-    setEmptyTitleError(currentTitle === '');
-    if (addStatus === 'idle' && currentTitle !== '') {
-      try {
-        setAddStatus('pending');
-        await dispatch(addRecipe({
+    setEmptyTitleError(currentTitle === "");
+    if (currentTitle === "") return;
+
+    try {
+      setLoading(true);
+      await dispatch(
+        addRecipe({
           userId: user.id,
           title: currentTitle,
-          time: currentTime,
+          time: Math.min(INFINITE_RECIPE_TIME, +currentTime),
           difficulty: currentDifficulty,
-          ingredients: currentIngredients,
-          steps: currentSteps,
+          ingredients:
+            currentIngredients.at(-1).value !== ""
+              ? currentIngredients
+              : currentIngredients.slice(0, -1),
+          steps:
+            currentSteps.at(-1).value !== ""
+              ? currentSteps
+              : currentSteps.slice(0, -1),
           cover: currentCover,
-          timestamp: new Date()
-        })).unwrap();
-        setIsModalShown(true);
-      } catch(err) {
-        console.log(err);
-      } finally {
-        setAddStatus('idle');
-      }
+          timestamp: new Date(),
+        })
+      ).unwrap();
+      setIsModalShown(true);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
     }
-  }
+  };
 
   const handleModalClose = () => {
     setIsModalShown(false);
     navigate(-1);
-  }
+  };
 
   const handleChangeCoverClick = (event) => {
     const file = event.target.files[0];
@@ -122,16 +133,16 @@ const AddRecipe = () => {
 
     const task = uploadBytesResumable(storageRef, file);
 
-    task.on('state_changed', null, null, () => {
+    task.on("state_changed", null, null, () => {
       getDownloadURL(task.snapshot.ref).then((url) => {
         setCurrentCover(url);
       });
     });
-  }
+  };
 
   const handleResetCoverClick = () => {
-    setCurrentCover('');
-  }
+    setCurrentCover("");
+  };
 
   return (
     <div className={styles.recipePage}>
@@ -150,7 +161,7 @@ const AddRecipe = () => {
             placeholder="Recipe title"
           />
           {emptyTitleError && (
-            <div className="error">Please, give your recipe a title!</div>
+            <div className="error">{EMPTY_RECIPE_TITLE_ERROR_MESSAGE}</div>
           )}
           <div className={styles.recipePage__time}>Time (in minutes):</div>
           <input
@@ -158,8 +169,6 @@ const AddRecipe = () => {
             className={cn(styles.recipe__time, styles.input, styles.input_time)}
             value={currentTime}
             onChange={handleTimeChange}
-            min={0}
-            max={5000}
           />
           <div className={styles.recipePage__difficulty}>
             Difficulty:
@@ -194,7 +203,7 @@ const AddRecipe = () => {
         <div className={styles.headerWrapper}>
           <h2 className={styles.section__header}>Ingredients</h2>
           <IconButton
-            className={styles.button_add}
+            className={styles.buttonAdd}
             onClick={handleAddIngredientClick}
             icon={<PlusIcon />}
           />
@@ -216,7 +225,7 @@ const AddRecipe = () => {
         <div className={styles.headerWrapper}>
           <h2 className={styles.section__header}>Steps</h2>
           <IconButton
-            className={styles.button_add}
+            className={styles.buttonAdd}
             onClick={handleAddStepClick}
             icon={<PlusIcon />}
           />
@@ -234,7 +243,10 @@ const AddRecipe = () => {
             />
           ))}
         </ol>
-        <Button onClick={handleSaveClick}>Save</Button>
+        <Button variant="primary" onClick={handleSaveClick} disabled={loading}>
+          Save
+          {loading && <Spinner className={styles.buttonSpinner} size="sm" />}
+        </Button>
         <Modal show={isModalShown} onHide={handleModalClose}>
           <Modal.Header closeButton>
             <Modal.Title>Recipe is successfully created!</Modal.Title>
@@ -246,6 +258,6 @@ const AddRecipe = () => {
       </div>
     </div>
   );
-}
+};
 
 export default AddRecipe;

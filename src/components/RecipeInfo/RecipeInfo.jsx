@@ -44,7 +44,7 @@ const RecipeInfo = () => {
     (r) => r.id === id
   ) || {
     title: "",
-    time: 0,
+    time: "",
     difficulty: 1,
     ingredients: [],
     steps: [],
@@ -68,8 +68,7 @@ const RecipeInfo = () => {
   };
 
   const handleTimeChange = (event) => {
-    const value = event.target.value;
-    setCurrentTime(value === "" ? 0 : parseInt(value));
+    setCurrentTime(event.target.value);
   };
 
   const handleDifficultyChange = (event) => {
@@ -96,7 +95,7 @@ const RecipeInfo = () => {
   };
 
   const handleAcceptTimeClick = () => {
-    dispatch(updateRecipe({ id, time: currentTime }));
+    dispatch(updateRecipe({ id, time: +currentTime }));
     setIsTimeEditing(false);
   };
 

@@ -7,4 +7,4 @@ export const userDefaultData = {
   activityLevel: 2,
 };
 
-export const INFINITE_RECIPE_TIME = 2880;
+export const INFINITE_RECIPE_TIME = 2 * 24 * 60 + 1;

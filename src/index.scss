@@ -1,4 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700;800&display=swap");
+@import "node_modules/bootstrap/scss/functions";
+@import "node_modules/bootstrap/scss/variables";
+@import "node_modules/bootstrap/scss/mixins/_breakpoints";
 
 :root {
   --c-text-main: #131123;
@@ -86,4 +89,10 @@ h3 {
 .error {
   color: var(--c-alert);
   font-size: 0.9rem;
+}
+
+@include media-breakpoint-down(sm) {
+  .page-content {
+    margin-left: 0;
+  }
 }

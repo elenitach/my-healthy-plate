@@ -2,11 +2,12 @@ import { NavLink } from "react-router-dom";
 import styles from "./NavBarItem.module.css";
 import cn from "classnames";
 
-const NavBarItem = ({ link, icon, text }) => {
+const NavBarItem = ({ link, icon, text, onClick }) => {
   return (
     <li className={styles.li}>
       <NavLink
         to={link}
+        onClick={onClick}
         className={({ isActive }) => {
           return isActive
             ? cn(styles.nav__item, styles.nav__item_active)

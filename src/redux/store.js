@@ -5,6 +5,7 @@ import { persistReducer, persistStore } from 'redux-persist';
 import thunk from 'redux-thunk';
 import recipesSlice from './recipes/recipesSlice';
 import productsSlice from './products/productsSlice';
+import uiSlice from './ui/uiSlice';
 
 const persistConfig = {
   key: 'root',
@@ -14,7 +15,8 @@ const persistConfig = {
 const rootReducer = combineReducers({ 
   user: userSlice,
   recipes: recipesSlice,
-  products: productsSlice
+  products: productsSlice,
+  ui: uiSlice
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

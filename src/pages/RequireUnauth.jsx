@@ -4,7 +4,7 @@ import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import { Navigate } from "react-router-dom";
 import cn from "classnames";
-import styles from './Page.module.css';
+import styles from './Page.module.scss';
 
 const RequireUnauth = ({ children, loginButtonRequired }) => {
   const user = useSelector(selectUser);
